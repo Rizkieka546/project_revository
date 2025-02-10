@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Welcome To Cleopatra</title>
+    <title>Welcome To Repository</title>
     <link rel="shortcut icon" href="{{ asset('img/fav.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -91,28 +91,28 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
 
-            // laporan Dropdown
-            const laporanDropdownBtn = document.getElementById("laporanDropdownBtn");
-            const laporanDropdownMenu = document.getElementById("laporanDropdownMenu");
-            const laporanDropdownIcon = document.getElementById("laporanDropdownIcon");
+        // laporan Dropdown
+        const laporanDropdownBtn = document.getElementById("laporanDropdownBtn");
+        const laporanDropdownMenu = document.getElementById("laporanDropdownMenu");
+        const laporanDropdownIcon = document.getElementById("laporanDropdownIcon");
 
-            laporanDropdownBtn.addEventListener("click", function() {
-                laporanDropdownMenu.classList.toggle("hidden");
-                laporanDropdownIcon.classList.toggle("rotate-180");
-            });
-
-            // referensi Dropdown
-            const referensiDropdownBtn = document.getElementById("referensiDropdownBtn");
-            const referensiDropdownMenu = document.getElementById("referensiDropdownMenu");
-            const referensiDropdownIcon = document.getElementById("referensiDropdownIcon");
-
-            referensiDropdownBtn.addEventListener("click", function() {
-                referensiDropdownMenu.classList.toggle("hidden");
-                referensiDropdownIcon.classList.toggle("rotate-180");
-            });
+        laporanDropdownBtn.addEventListener("click", function() {
+            laporanDropdownMenu.classList.toggle("hidden");
+            laporanDropdownIcon.classList.toggle("rotate-180");
         });
+
+        // referensi Dropdown
+        const referensiDropdownBtn = document.getElementById("referensiDropdownBtn");
+        const referensiDropdownMenu = document.getElementById("referensiDropdownMenu");
+        const referensiDropdownIcon = document.getElementById("referensiDropdownIcon");
+
+        referensiDropdownBtn.addEventListener("click", function() {
+            referensiDropdownMenu.classList.toggle("hidden");
+            referensiDropdownIcon.classList.toggle("rotate-180");
+        });
+    });
     </script>
 
     @stack('script')

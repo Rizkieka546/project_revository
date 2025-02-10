@@ -27,32 +27,28 @@ class SUController extends Controller
         $jumlahBarang = BarangInventaris::count();
         $jumlahPeminjaman = Peminjaman::count();
 
-        // Grafik transaksi peminjaman harian
-        $dataGrafik = Peminjaman::selectRaw('DATE(pb_tgl) as tanggal, COUNT(*) as jumlah')
-            ->groupBy('tanggal')
-            ->orderBy('tanggal', 'ASC')
+        // Grafik transaksi peminjaman bulanan
+        $dataGrafik = Peminjaman::selectRaw('MONTH(pb_tgl) as bulan, COUNT(*) as jumlah')
+            ->whereYear('pb_tgl', Carbon::now()->year)
+            ->groupBy('bulan')
+            ->orderBy('bulan', 'ASC')
             ->get()
             ->mapWithKeys(function ($item) {
-                return [Carbon::parse($item->tanggal)->format('Y-m-d') => $item->jumlah];
+                return [$item->bulan => $item->jumlah];
             });
 
-        // Persiapan data grafik untuk bulan saat ini
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-        $daysInMonth = Carbon::now()->daysInMonth;
-
-        $labels = [];
+        // Persiapan data grafik untuk satu tahun penuh
+        $labels = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         $formattedData = [];
 
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $date = Carbon::create($currentYear, $currentMonth, $day)->format('Y-m-d');
-            $labels[] = Carbon::create($currentYear, $currentMonth, $day)->format('d-m-Y');
-            $formattedData[] = $dataGrafik[$date] ?? 0;
+        for ($month = 1; $month <= 12; $month++) {
+            $formattedData[] = $dataGrafik[$month] ?? 0;
         }
 
         // Kirim data ke view
         return view('super_user.dashboard.super_user', compact('jumlahBarang', 'jumlahPeminjaman', 'labels', 'formattedData'));
     }
+
 
     public function indexBBK(Request $request)
     {
@@ -97,7 +93,7 @@ class SUController extends Controller
             'jns_brg_kode' => 'required|exists:tr_jenis_barang,jns_brg_kode',
             'br_nama' => 'required|string|max:255',
             'br_tgl_terima' => 'required|date',
-            'br_status' => 'required|in:0,1,2',
+            'br_status' => 'required',
         ]);
 
         // Ambil kode terakhir berdasarkan tahun yang sama
@@ -151,7 +147,7 @@ class SUController extends Controller
             'jns_brg_kode' => 'required|exists:tr_jenis_barang,jns_brg_kode',
             'br_nama' => 'required|string|max:255',
             'br_tgl_terima' => 'required|date',
-            'br_status' => 'required|in:0,1,2',
+            'br_status' => 'required',
         ]);
 
         $barang = BarangInventaris::where('br_kode', $br_kode)->firstOrFail();
@@ -236,8 +232,10 @@ class SUController extends Controller
 
     public function createPM()
     {
-        // Mengambil semua data siswa
-        $siswa = Siswa::all();
+        // Mengambil semua data siswa kecuali yang memiliki pb_id = 1
+        $siswa = Siswa::whereDoesntHave('peminjaman', function ($query) {
+            $query->where('pb_stat', 1);
+        })->get();
 
         // Mengambil barang yang belum dipinjam (berstatus 1 pada td_peminjaman_barang)
         $barang = BarangInventaris::whereNotIn('br_kode', function ($query) {
@@ -246,6 +244,7 @@ class SUController extends Controller
 
         return view('super_user.peminjaman.create', compact('siswa', 'barang'));
     }
+
 
     public function storePM(Request $request)
     {
@@ -262,7 +261,7 @@ class SUController extends Controller
 
             // Tentukan tanggal peminjaman dan batas pengembalian
             $tanggalPeminjaman = Carbon::createFromFormat('Y-m-d', $request->pb_tgl);
-            $tanggalKembali = $tanggalPeminjaman->addWeek(); // Misalnya, pinjam barang 1 minggu
+            $tanggalKembali = $tanggalPeminjaman->copy()->addWeek();
 
             DB::beginTransaction();
 

@@ -49,7 +49,7 @@ class PeminjamanController extends Controller
 
             // Tentukan tanggal peminjaman dan batas pengembalian
             $tanggalPeminjaman = Carbon::createFromFormat('Y-m-d', $request->pb_tgl);
-            $tanggalKembali = $tanggalPeminjaman->addWeek(); // Misalnya, pinjam barang 1 minggu
+            $tanggalKembali = $tanggalPeminjaman->copy()->addWeek(); // Tambah 7 hari dari pb_tgl
 
             DB::beginTransaction();
 

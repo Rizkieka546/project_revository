@@ -23,13 +23,21 @@ class Siswa extends Model
         'no_siswa',
     ];
 
+    // Relasi ke tabel jurusan
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
 
+    // Relasi ke tabel kelas
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
+
+    // Relasi ke tabel peminjaman (seorang siswa bisa memiliki banyak peminjaman)
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class, 'siswa_id', 'siswa_id');
     }
 }

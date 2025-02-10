@@ -9,11 +9,21 @@ use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barang = BarangInventaris::with('jenis_barang')->get();
+        $query = BarangInventaris::with('jenis_barang');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('br_nama', 'like', "%$search%")
+                ->orWhere('br_kode', 'like', "%$search%");
+        }
+
+        $barang = $query->get();
+
         return view('barang.index', compact('barang'));
     }
+
 
     public function create()
     {
@@ -27,7 +37,7 @@ class BarangController extends Controller
             'jns_brg_kode' => 'required|exists:tr_jenis_barang,jns_brg_kode',
             'br_nama' => 'required|string|max:255',
             'br_tgl_terima' => 'required|date',
-            'br_status' => 'required|in:0,1,2',
+            'br_status' => 'required|in:0,1,2,3',
         ]);
 
         // Ambil kode terakhir berdasarkan tahun yang sama
@@ -83,7 +93,7 @@ class BarangController extends Controller
             'jns_brg_kode' => 'required|exists:tr_jenis_barang,jns_brg_kode',
             'br_nama' => 'required|string|max:255',
             'br_tgl_terima' => 'required|date',
-            'br_status' => 'required|in:0,1,2',
+            'br_status' => 'required|in:0,1,2,3',
         ]);
 
         $barang = BarangInventaris::where('br_kode', $br_kode)->firstOrFail();

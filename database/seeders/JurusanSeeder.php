@@ -20,6 +20,12 @@ class JurusanSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => '2',
+                'nama_jurusan' => 'PPLG GIM',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

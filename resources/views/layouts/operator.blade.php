@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Welcome To Cleopatra</title>
+    <title>Welcome To Repository</title>
     <link rel="shortcut icon" href="{{ asset('img/fav.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -89,47 +89,47 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Barang Dropdown
-            const barangDropdownBtn = document.getElementById("barangDropdownBtn");
-            const barangDropdownMenu = document.getElementById("barangDropdownMenu");
-            const barangDropdownIcon = document.getElementById("barangDropdownIcon");
+    document.addEventListener("DOMContentLoaded", function() {
+        // Barang Dropdown
+        const barangDropdownBtn = document.getElementById("barangDropdownBtn");
+        const barangDropdownMenu = document.getElementById("barangDropdownMenu");
+        const barangDropdownIcon = document.getElementById("barangDropdownIcon");
 
-            barangDropdownBtn.addEventListener("click", function() {
-                barangDropdownMenu.classList.toggle("hidden");
-                barangDropdownIcon.classList.toggle("rotate-180");
-            });
-
-            // Peminjaman Dropdown
-            const peminjamanDropdownBtn = document.getElementById("peminjamanDropdownBtn");
-            const peminjamanDropdownMenu = document.getElementById("peminjamanDropdownMenu");
-            const peminjamanDropdownIcon = document.getElementById("peminjamanDropdownIcon");
-
-            peminjamanDropdownBtn.addEventListener("click", function() {
-                peminjamanDropdownMenu.classList.toggle("hidden");
-                peminjamanDropdownIcon.classList.toggle("rotate-180");
-            });
-
-            // laporan Dropdown
-            const laporanDropdownBtn = document.getElementById("laporanDropdownBtn");
-            const laporanDropdownMenu = document.getElementById("laporanDropdownMenu");
-            const laporanDropdownIcon = document.getElementById("laporanDropdownIcon");
-
-            laporanDropdownBtn.addEventListener("click", function() {
-                laporanDropdownMenu.classList.toggle("hidden");
-                laporanDropdownIcon.classList.toggle("rotate-180");
-            });
-
-            // referensi Dropdown
-            const referensiDropdownBtn = document.getElementById("referensiDropdownBtn");
-            const referensiDropdownMenu = document.getElementById("referensiDropdownMenu");
-            const referensiDropdownIcon = document.getElementById("referensiDropdownIcon");
-
-            referensiDropdownBtn.addEventListener("click", function() {
-                referensiDropdownMenu.classList.toggle("hidden");
-                referensiDropdownIcon.classList.toggle("rotate-180");
-            });
+        barangDropdownBtn.addEventListener("click", function() {
+            barangDropdownMenu.classList.toggle("hidden");
+            barangDropdownIcon.classList.toggle("rotate-180");
         });
+
+        // Peminjaman Dropdown
+        const peminjamanDropdownBtn = document.getElementById("peminjamanDropdownBtn");
+        const peminjamanDropdownMenu = document.getElementById("peminjamanDropdownMenu");
+        const peminjamanDropdownIcon = document.getElementById("peminjamanDropdownIcon");
+
+        peminjamanDropdownBtn.addEventListener("click", function() {
+            peminjamanDropdownMenu.classList.toggle("hidden");
+            peminjamanDropdownIcon.classList.toggle("rotate-180");
+        });
+
+        // laporan Dropdown
+        const laporanDropdownBtn = document.getElementById("laporanDropdownBtn");
+        const laporanDropdownMenu = document.getElementById("laporanDropdownMenu");
+        const laporanDropdownIcon = document.getElementById("laporanDropdownIcon");
+
+        laporanDropdownBtn.addEventListener("click", function() {
+            laporanDropdownMenu.classList.toggle("hidden");
+            laporanDropdownIcon.classList.toggle("rotate-180");
+        });
+
+        // referensi Dropdown
+        const referensiDropdownBtn = document.getElementById("referensiDropdownBtn");
+        const referensiDropdownMenu = document.getElementById("referensiDropdownMenu");
+        const referensiDropdownIcon = document.getElementById("referensiDropdownIcon");
+
+        referensiDropdownBtn.addEventListener("click", function() {
+            referensiDropdownMenu.classList.toggle("hidden");
+            referensiDropdownIcon.classList.toggle("rotate-180");
+        });
+    });
     </script>
 
     @stack('script')
