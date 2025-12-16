@@ -15,7 +15,7 @@
     @endif
 
     <div class="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-300">
+        <table class="min-w-full divide-y divide-teal-300">
             <thead class="text-teal-400 bg-teal-400 text-white">
                 <tr class="text-left uppercase text-sm font-semibold">
                     <th class="py-3 px-6">#</th>
@@ -26,7 +26,7 @@
                     <th class="py-3 px-6 text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 border border-teal-400">
+            <tbody class="divide-y divide-teal-200 border border-teal-400">
                 @php $nomor = 1; @endphp
                 @foreach ($peminjaman as $item)
                 @foreach ($item->peminjamanBarang as $peminjamanBarang)
@@ -37,7 +37,8 @@
                     </td>
                     <td class="py-4 px-6 text-gray-800">{{ \Carbon\Carbon::parse($item->pb_tgl)->format('d-m-Y') }}</td>
                     <td class="py-4 px-6 text-gray-800">
-                        {{ \Carbon\Carbon::parse($item->pb_harus_kembali_tgl)->format('d-m-Y') }}</td>
+                        {{ \Carbon\Carbon::parse($item->pb_harus_kembali_tgl)->format('d-m-Y') }}
+                    </td>
 
                     <td class="py-4 px-6 flex justify-center gap-3">
                         @if ($peminjamanBarang->pdb_sts == 1)

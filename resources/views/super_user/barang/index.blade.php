@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-teal-300 pb-2">Daftar Barang</h1>
 
     <div class="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-300">
+        <table class="min-w-full divide-y divide-teal-300">
             <thead class="text-teal-400 bg-teal-400 text-white">
                 <tr class="text-left uppercase text-sm font-semibold">
                     <th class="py-3 px-6">Nama Barang</th>
@@ -15,7 +15,7 @@
                     <th class="py-3 px-6 text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 border border-teal-400">
+            <tbody class="divide-y divide-teal-200 border border-teal-400">
                 @foreach ($barang as $item)
                 <tr class="hover:bg-gray-100 transition duration-300">
                     <td class="py-4 px-6 text-gray-800 font-medium">{{ $item->br_nama }}</td>

@@ -3,120 +3,115 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Welcome To Repository</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventori Dashboard</title>
+
     <link rel="shortcut icon" href="{{ asset('img/fav.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
-    <div class="flex flex-row h-screen">
+<body class="bg-gradient-to-br from-slate-100 to-slate-200">
+    <div class="flex h-screen overflow-hidden">
+
         <!-- Sidebar -->
-        <aside class="bg-white border-r border-gray-300 p-6 w-64 flex flex-col shadow-lg">
-            <div class="mb-4 flex items-center border-b-2 border-teal-400 pb-2">
-                <img src="{{ asset('img/logo.png') }}" class="w-10">
-                <strong class="ml-2 text-lg text-gray-700">Inventori</strong>
+        <aside class="w-72 bg-white/80 backdrop-blur-xl border-r border-slate-200 shadow-xl flex flex-col">
+
+            <!-- Logo -->
+            <div class="px-6 py-5 flex items-center gap-3 border-b border-slate-200">
+                <img src="{{ asset('img/logo.png') }}" class="w-9 h-9">
+                <span class="text-xl font-bold text-slate-700 tracking-tight">
+                    Inventori
+                </span>
             </div>
-            <nav class="flex-1 space-y-4">
+
+            <!-- Menu -->
+            <nav class="flex-1 px-4 py-6 space-y-2 text-slate-600 text-sm">
+
+                <!-- Dashboard -->
                 <a href="{{ route('su.dashboard.super.user') }}"
-                    class="flex w-full text-gray-700 hover:text-teal-600 border-2 border-transparent hover:border-teal-500 rounded-md p-2">
-                    <i class="fad fa-chart-pie mr-2"></i> Dashboard
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-teal-500 hover:text-white transition-all duration-200">
+                    <i class="fad fa-chart-pie text-lg"></i>
+                    Dashboard
                 </a>
 
-                <!-- Barang Dropdown -->
-                <div class="relative">
-                    <button
-                        class="flex items-center justify-between w-full text-gray-700 hover:text-teal-600 border-2 border-transparent hover:border-teal-500 rounded-md p-2"
-                        onclick="toggleDropdown('barangDropdown')">
-                        <span class="flex items-center"><i class="fad fa-box mr-2"></i> Barang</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div id="barangDropdown" class="hidden mt-2 space-y-2 bg-gray-50 rounded-md shadow-md p-2">
-                        <a href="{{ route('su.barang.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Daftar Barang</a>
-                        <a href="{{ route('su.barang.create') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Penerimaan Barang</a>
-                    </div>
-                </div>
+                <!-- Dropdown -->
+                @php
+                    $menus = [
+                        ['id'=>'barang','icon'=>'fa-box','title'=>'Barang', 'items'=>[
+                            ['Daftar Barang', 'su.barang.index'],
+                            ['Penerimaan Barang', 'su.barang.create'],
+                        ]],
+                        ['id'=>'peminjaman','icon'=>'fa-hand-holding-box','title'=>'Peminjaman', 'items'=>[
+                            ['Daftar Peminjaman', 'su.peminjaman.index'],
+                            ['Pengembalian Barang', 'su.pengembalian.index'],
+                            ['Barang Belum Kembali', 'su.barangbelumkembali.index'],
+                        ]],
+                        ['id'=>'laporan','icon'=>'fa-file-alt','title'=>'Laporan', 'items'=>[
+                            ['Laporan Barang', 'su.laporan.barang'],
+                            ['Laporan Pengembalian', 'su.pengembalian.index'],
+                            ['Barang Belum Kembali', 'su.barangbelumkembali.index'],
+                        ]],
+                        ['id'=>'referensi','icon'=>'fa-book','title'=>'Referensi', 'items'=>[
+                            ['Jenis Barang', 'su.jenis_barang.index'],
+                            ['Daftar Siswa', 'su.siswa.index'],
+                            ['User', 'su.user.index'],
+                        ]]
+                    ];
+                @endphp
 
-                <!-- Peminjaman Dropdown -->
-                <div class="relative">
-                    <button
-                        class="flex items-center justify-between w-full text-gray-700 hover:text-teal-600 border-2 border-transparent hover:border-teal-500 rounded-md p-2"
-                        onclick="toggleDropdown('peminjamanDropdown')">
-                        <span class="flex items-center"><i class="fad fa-hand-holding-box mr-2"></i> Peminjaman</span>
-                        <i class="fas fa-chevron-down"></i>
+                @foreach($menus as $menu)
+                <div>
+                    <button onclick="toggle('{{ $menu['id'] }}')"
+                        class="flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-slate-100 transition">
+                        <span class="flex items-center gap-3">
+                            <i class="fad {{ $menu['icon'] }} text-lg"></i>
+                            {{ $menu['title'] }}
+                        </span>
+                        <i class="fas fa-chevron-down text-xs"></i>
                     </button>
-                    <div id="peminjamanDropdown" class="hidden mt-2 space-y-2 bg-gray-50 rounded-md shadow-md p-2">
-                        <a href="{{ route('su.peminjaman.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Daftar Peminjaman</a>
-                        <a href="{{ route('su.pengembalian.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Pengembalian Barang</a>
-                        <a href="{{ route('su.barangbelumkembali.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Barang Belum Kembali</a>
-                    </div>
-                </div>
 
-                <!-- Laporan Dropdown -->
-                <div class="relative">
-                    <button
-                        class="flex items-center justify-between w-full text-gray-700 hover:text-teal-600 border-2 border-transparent hover:border-teal-500 rounded-md p-2"
-                        onclick="toggleDropdown('laporanDropdown')">
-                        <span class="flex items-center"><i class="fad fa-file-alt mr-2"></i> Laporan</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div id="laporanDropdown" class="hidden mt-2 space-y-2 bg-gray-50 rounded-md shadow-md p-2">
-                        <a href="{{ route('su.laporan.barang') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Laporan Barang</a>
-                        <a href="{{ route('su.peminjaman.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Laporan Peminjaman</a>
-                        <a href="{{ route('su.barangbelumkembali.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Laporan Barang Belum
-                            Kembali</a>
+                    <div id="{{ $menu['id'] }}" class="hidden ml-8 mt-2 space-y-1">
+                        @foreach($menu['items'] as $item)
+                        <a href="{{ route($item[1]) }}"
+                           class="block px-4 py-2 rounded-lg hover:bg-teal-100 hover:text-teal-700 transition">
+                            {{ $item[0] }}
+                        </a>
+                        @endforeach
                     </div>
                 </div>
-
-                <!-- Referensi Dropdown -->
-                <div class="relative">
-                    <button
-                        class="flex items-center justify-between w-full text-gray-700 hover:text-teal-600 border-2 border-transparent hover:border-teal-500 rounded-md p-2"
-                        onclick="toggleDropdown('referensiDropdown')">
-                        <span class="flex items-center"><i class="fad fa-book mr-2"></i> Referensi</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div id="referensiDropdown" class="hidden mt-2 space-y-2 bg-gray-50 rounded-md shadow-md p-2">
-                        <a href="{{ route('su.jenis_barang.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Jenis Barang</a>
-                        <a href="{{ route('su.siswa.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">Daftar Siswa</a>
-                        <a href="{{ route('su.user.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-teal-200 rounded">User</a>
-                    </div>
-                </div>
+                @endforeach
             </nav>
 
-            <!-- Logout Button -->
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="mt-auto">
+            <!-- Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="p-4">
                 @csrf
-                <button type="submit" class="w-full py-2 text-center text-white bg-red-500 rounded hover:bg-red-600">
+                <button
+                    class="w-full py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition">
                     Logout
                 </button>
             </form>
+
         </aside>
-        <!-- End Sidebar -->
 
         <!-- Content -->
-        <main class="flex-1 p-6 bg-white">
-            @yield('content')
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="bg-white rounded-2xl shadow-md p-6 min-h-full">
+                @yield('content')
+            </div>
         </main>
     </div>
 
     <script>
-    function toggleDropdown(id) {
-        document.getElementById(id).classList.toggle("hidden");
-    }
+        function toggle(id) {
+            document.getElementById(id).classList.toggle('hidden')
+        }
     </script>
 
     @stack('script')
